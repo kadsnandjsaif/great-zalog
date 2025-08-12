@@ -20,6 +20,7 @@ $(function(){
   var $grid = $('.estate-grid');
   if (!$grid.length) return;
   var $slider = null;
+  var $controls = null;
 
   function buildSlider(){
     if ($slider) return;
@@ -41,6 +42,15 @@ $(function(){
       speed: 400,
       cssEase: 'ease'
     });
+
+    // Навигация стрелками под слайдером (как в блоке отзывов)
+    $controls = $('<div class="reviews-arrows">\
+      <img class="reviews-arrow reviews-arrow--prev" src="images/icons/Arrow 6.svg" alt="Назад" width="65" height="24" />\
+      <img class="reviews-arrow reviews-arrow--next" src="images/icons/Arrow 6.svg" alt="Вперёд" width="65" height="24" />\
+    </div>');
+    $slider.after($controls);
+    $controls.find('.reviews-arrow--prev').on('click', function(){ $slider.slick('slickPrev'); });
+    $controls.find('.reviews-arrow--next').on('click', function(){ $slider.slick('slickNext'); });
   }
 
   function destroySlider(){
@@ -49,6 +59,7 @@ $(function(){
       $slider.remove();
       $slider = null;
     }
+    if ($controls){ $controls.remove(); $controls = null; }
     $grid.show();
   }
 
@@ -315,7 +326,7 @@ $(function(){
 
   var steps = [
     {key:'term', label:'Срок займа', unit:'мес', hint:'от 1 до 120 месяцев', mask:{ alias:'numeric', digits:0, integerDigits:3, min:1, rightAlign:false, groupSeparator:' ', autoGroup:false, showMaskOnHover:false, showMaskOnFocus:false }, inputmode:'numeric'},
-    {key:'amount', label:'Желаемая сумма займа', unit:'₽', hint:'минимум 50 000', mask:{ alias:'numeric', digits:0, min:50000, rightAlign:false, groupSeparator:' ', autoGroup:true, showMaskOnHover:false, showMaskOnFocus:false }, inputmode:'numeric'},
+    {key:'amount', label:'Желаемая сумма займа', unit:'₽', hint:'минимум 500 000', mask:{ alias:'numeric', digits:0, min:500000, rightAlign:false, groupSeparator:' ', autoGroup:true, showMaskOnHover:false, showMaskOnFocus:false }, inputmode:'numeric'},
     {key:'pledge', label:'Вид залога', unit:'', hint:'например: коммерческая недвижимость', mask:{ regex:'[A-Za-zА-Яа-яЁё\s\-]{3,60}', showMaskOnHover:false, showMaskOnFocus:false }, inputmode:'text'},
     {key:'income', label:'Заработная плата', unit:'₽', hint:'укажите чистый доход', mask:{ alias:'numeric', digits:0, min:0, rightAlign:false, groupSeparator:' ', autoGroup:true, showMaskOnHover:false, showMaskOnFocus:false }, inputmode:'numeric'},
     {key:'phone', label:'Номер телефона', unit:'', hint:'формат +7 (999)-999-99-99', mask:{ mask:'+7 (999)-999-99-99' }, inputmode:'tel'}
@@ -369,8 +380,8 @@ $(function(){
     var span = $('#__measure');
     if (span.length === 0) span = $('<span id="__measure" />').css({position:'absolute', visibility:'hidden', whiteSpace:'pre', fontFamily:'"Druk Cyrillic"', fontWeight:900, fontSize:'56px'}).appendTo(document.body);
     span.text($input.val() || '');
-    var w = span.width() + 24;
-    $input.css('width', Math.min(Math.max(w, 120), 900));
+    var w = span.width();
+    $input.css('width', Math.min(Math.max(w, 60), 900));
   }
   $input.on('input keyup', function(){
     // Автокоррекция: если срок > 120, подставляем 120
@@ -461,6 +472,7 @@ $(function(){
   var $grid = $('.features-grid');
   if (!$grid.length) return;
   var $slider = null;
+  var $controls = null;
 
   function buildFeaturesSlider(){
     if ($slider) return;
@@ -481,6 +493,15 @@ $(function(){
       speed: 400,
       cssEase: 'ease'
     });
+
+    // Навигация стрелками под слайдером (как в блоке отзывов)
+    $controls = $('<div class="reviews-arrows">\
+      <img class="reviews-arrow reviews-arrow--prev" src="images/icons/Arrow 6.svg" alt="Назад" width="65" height="24" />\
+      <img class="reviews-arrow reviews-arrow--next" src="images/icons/Arrow 6.svg" alt="Вперёд" width="65" height="24" />\
+    </div>');
+    $slider.after($controls);
+    $controls.find('.reviews-arrow--prev').on('click', function(){ $slider.slick('slickPrev'); });
+    $controls.find('.reviews-arrow--next').on('click', function(){ $slider.slick('slickNext'); });
   }
 
   function destroyFeaturesSlider(){
@@ -489,6 +510,7 @@ $(function(){
       $slider.remove();
       $slider = null;
     }
+    if ($controls){ $controls.remove(); $controls = null; }
     $grid.show();
   }
 
