@@ -314,7 +314,7 @@ $(function(){
   $apply.find('.wrapper').append($container);
 
   var steps = [
-    {key:'term', label:'Срок займа', unit:'мес', hint:'от 1 до 120 месяцев', mask:{ alias:'numeric', digits:0, integerDigits:3, min:1, max:120, rightAlign:false, groupSeparator:' ', autoGroup:false, showMaskOnHover:false, showMaskOnFocus:false }, inputmode:'numeric'},
+    {key:'term', label:'Срок займа', unit:'мес', hint:'от 1 до 120 месяцев', mask:{ alias:'numeric', digits:0, integerDigits:3, min:1, rightAlign:false, groupSeparator:' ', autoGroup:false, showMaskOnHover:false, showMaskOnFocus:false }, inputmode:'numeric'},
     {key:'amount', label:'Желаемая сумма займа', unit:'₽', hint:'минимум 50 000', mask:{ alias:'numeric', digits:0, min:50000, rightAlign:false, groupSeparator:' ', autoGroup:true, showMaskOnHover:false, showMaskOnFocus:false }, inputmode:'numeric'},
     {key:'pledge', label:'Вид залога', unit:'', hint:'например: коммерческая недвижимость', mask:{ regex:'[A-Za-zА-Яа-яЁё\s\-]{3,60}', showMaskOnHover:false, showMaskOnFocus:false }, inputmode:'text'},
     {key:'income', label:'Заработная плата', unit:'₽', hint:'укажите чистый доход', mask:{ alias:'numeric', digits:0, min:0, rightAlign:false, groupSeparator:' ', autoGroup:true, showMaskOnHover:false, showMaskOnFocus:false }, inputmode:'numeric'},
@@ -377,10 +377,16 @@ $(function(){
     var st = steps[i];
     if (st && st.key === 'term'){
       var raw = ($input.val()||'').replace(/\s+/g,'');
+      // Обрежем до максимум 3 символов
+      if (raw.length > 3) raw = raw.slice(0,3);
+      // Удалим ведущие нули, но оставим один ноль, если все нули
+      raw = raw.replace(/^0+(\d)/, '$1');
       var n = parseInt(raw, 10);
-      if (!isNaN(n) && n > 120){
-        $input.val('120');
+      if (!isNaN(n)){
+        if (n > 120) raw = '120';
+        if (n < 1) raw = '1';
       }
+      $input.val(raw);
     }
     toggle();
     autoWidth();
