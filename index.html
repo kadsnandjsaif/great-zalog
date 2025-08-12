@@ -105,8 +105,8 @@
             <h2 class="loans-title">выдаем займы под<br>личные и бизнес цели</h2>
 
             <div class="loan-cards">
-              <article class="loan-card loan-card--left">
-                <div class="loan-card__bg" style="background-image:url('images/img/srochno.png')"></div>
+              <article class="loan-card loan-card--left light">
+                <div class="loan-card__bg" style="background-image:url('images/help2.jpg') ; background-position: center;"></div>
                 <div class="loan-card__content">
                   <h3 class="loan-card__title">срочные займы<br>для ваших задач</h3>
                   <p class="loan-card__subtitle">В том числе с любой кредитной<br>историей, действующими кредитами</p>
@@ -389,7 +389,7 @@
 
               <div class="calc-row">
                 <label class="calc-label">Сумма займа</label>
-                <input type="range" id="loanAmount" min="100000" max="10000000" value="150000" step="10000" />
+                <input type="range" id="loanAmount" min="500000" max="100000000" value="150000" step="10000" />
                 <div class="calc-value"><span id="loanAmountValue">150 000 ₽</span></div>
               </div>
 
@@ -709,9 +709,27 @@
         <div class="modal-body">
        
           <h3 class="modal-title">Спасибо!</h3>
-          <p class="modal-text">Мы с вами свяжемся в ближайшее время</p>
+          <p class="modal-text"> Наш менеджер свяжется с Вами в течение 15 минут</p>
         </div>
      </div>
+      <!-- Lead capture modal: имя + телефон -->
+      <div id="lead-modal" class="modal modal--lead" style="display:none;">
+        <button class="modal-close" data-fancybox-close aria-label="Закрыть">×</button>
+        <div class="modal-body">
+          <div class="modal-badge" aria-hidden="true"></div>
+          <h3 class="modal-title">Перезвоним за 15 минут</h3>
+          <p class="modal-text">Оставьте имя и телефон. Наш менеджер свяжется с вами в течение 15 минут.</p>
+          <form id="lead-form" class="lead-form" novalidate>
+            <input type="text" name="name" placeholder="Ваше имя" required />
+            <input type="tel" name="phone" class="wpcf7-tel" placeholder="Ваш телефон" required />
+            <button type="submit" class="cta-btn" style="width:100%; justify-content:center; margin-top:8px;">
+              <span>Жду звонка</span>
+              <span class="cta-arrow">→</span>
+            </button>
+            <small class="lead-hint">Нажимая «Жду звонка», вы соглашаетесь с обработкой персональных данных</small>
+          </form>
+        </div>
+      </div>
      <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.8/dist/jquery.inputmask.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.js"></script>

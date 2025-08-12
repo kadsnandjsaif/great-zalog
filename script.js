@@ -275,6 +275,35 @@ $(function(){
     });
   }
 
+  // Лид-форма в модалке: валидация и успех -> спасибо
+  $(document).on('submit', '#lead-form', function(e){
+    e.preventDefault();
+    var $form = $(this);
+    var name = ($form.find('input[name="name"]').val()||'').trim();
+    var phone = ($form.find('input[name="phone"]').val()||'').trim();
+    if (!name || !phone){
+      $form.find('input').css('border-color', '#ff8080');
+      return;
+    }
+    if (window.Fancybox){
+      Fancybox.close();
+      setTimeout(function(){
+        Fancybox.show([{ src:'#thanks-modal', type:'inline' }], { closeButton:false, dragToClose:false });
+        setTimeout(function(){ Fancybox.close(); }, 2500);
+      }, 80);
+    }
+    $form[0].reset();
+  });
+
+  // Точки входа: Подробнее, Получить деньги, Получить консультацию
+  $(document).on('click', '.loan-card__btn, .approve-cta, .consult-cta', function(e){
+    var $t = $(this);
+    // если это ссылочный элемент с якорем на калькулятор — перехватим в lead-модалку
+    e.preventDefault();
+    if (window.Fancybox){
+      Fancybox.show([{ src:'#lead-modal', type:'inline' }], { dragToClose:false, closeButton:true });
+    }
+  });
   $('#apply-form').on('submit', function(e){
     e.preventDefault();
     var form = this;

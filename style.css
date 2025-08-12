@@ -115,6 +115,18 @@ html { overflow-x: hidden; }
 .modal-close{ position:absolute; right:12px; top:12px; width:36px; height:36px; border-radius:50%; border:1px solid rgba(255,255,255,.35); background: rgba(0,0,0,.3); color:#fff; font-size:22px; line-height:1; cursor:pointer; }
 .modal-badge{ width:72px; height:72px; margin:0 auto 12px; border-radius:50%; background: radial-gradient(60% 60% at 50% 40%, #2f90ff 0%, rgba(47,144,255,.2) 100%); filter: blur(.2px); }
 
+/* Lead modal form */
+.lead-form{ display:flex; flex-direction:column; gap:10px; margin-top:12px; }
+.lead-form input[type=text], .lead-form input[type=tel]{ height:44px; border:1px solid rgba(255,255,255,.25); background: rgba(0,0,0,.25); color:#fff; border-radius:10px; padding:0 14px; font-family:"Proxima Nova"; font-size:18px; }
+.lead-form input::placeholder{ color: rgba(255,255,255,.6); }
+.lead-hint{ display:block; margin-top:8px; font-family:"Proxima Nova"; font-weight:400; font-size:12px; color: rgba(255,255,255,.65); }
+
+@media (max-width: 767px){
+  .modal{ max-width: 92vw; padding: 20px; }
+  .modal-title{ font-size: 36px; }
+  .modal-text{ font-size: 16px; }
+}
+
 .header-text {
     transition: all 0.2s linear;
 }
@@ -365,15 +377,21 @@ html { overflow-x: hidden; }
 .loan-card.dark::before{
   content: "";
   position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.42) 60%, rgba(0,0,0,0.25) 100%);
+  background: linear-gradient(147deg, rgb(0 0 0 / 55%) 0%, rgb(0 0 0 / 30%) 10%, rgb(0 0 0 / 0%) 60%);
   z-index: 1;
 }
+
+.loan-card.light::before{    
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(138deg, rgb(255 255 255 / 700%) 14%, rgb(179 179 179 / 21%) 52%);
+  z-index: 1;}
+
 .loan-card__bg{
   position: absolute; inset: 0;
   background-size: cover;
-  background-position: center;
-  transform: scale(1.05);
-  top: 0; /* будем анимировать через jQuery */
+
 }
 .loan-card__content{
   position: relative;
@@ -447,6 +465,9 @@ html { overflow-x: hidden; }
   .loans-title{ font-size: 72px; }
   .loan-cards{ grid-template-columns: 1fr; }
   .loan-card{ min-height: 720px; }
+  .special-card__img--bottom{ transform: translateY(50%)!important; }
+.special-card__img--top{ transform: translateY(80%) translateX(6%)!important; transition: transform .25s ease; }
+.special-card--oficial:hover .special-card__img--top{ transform: translateY(80%)!important; }
 }
 @media (max-width: 767px){
   .loans-title{ font-size: 48px; }
@@ -470,9 +491,8 @@ html { overflow-x: hidden; }
   min-height: clamp(200px, 22vw, 700px);
 }
 .special-card__label{
-  font-family:"Proxima Nova"; font-weight:700; font-size: clamp(20px, 2.2vw, 34px); text-transform:uppercase; color:#fff;
-  margin-left: clamp(20px, 3vw, 50px);
-  margin-top: clamp(20px, 3vw, 50px);
+  font-family:"Proxima Nova"; font-weight:700; font-size: clamp(30px, 2.2vw, 34px); text-transform:uppercase; color:#fff;
+margin: 5%;
   position: relative; z-index: 2;
 }
 .special-card__media{ position:absolute; inset:0; display:flex; align-items:flex-end; justify-content:center; pointer-events:none; }
@@ -498,17 +518,31 @@ html { overflow-x: hidden; }
 .special-card__img--top{ transform: translateY(50%) translateX(6%); transition: transform .25s ease; }
 .special-card--oficial:hover .special-card__img--top{ transform: translateY(44%); }
 
-@media (max-width: 1199px){ .special-col--left{ margin-top: 40px; } }
+@media (max-width: 1199px){ .special-col--left{ margin-top: 40px; } 
+.special-card--oficial{
+  min-height: 400px!important;
+  .special-card{ min-height: 550px!important; min-width: 80vw; }
+}
+}
 @media (max-width: 767px){
+  .special-card__img--bottom{ transform: translateY(70%); }
+.special-card__img--top{ transform: translateY(80%) translateX(6%); transition: transform .25s ease; }
+.special-card--oficial:hover .special-card__img--top{ transform: translateY(80%); }
   .special-grid{ flex-direction:column; }
   .special-col--left{ margin-top: 0; }
-  .special-card{ min-height: 320px; min-width: 80vw; }
+  .special-card{ min-height: 350px!important; min-width: 80vw; }
 }
 
 /* Снижаем высоту карт на адаптивах, перекрывая жесткие высоты */
 
 @media (max-width: 1439px){
-  .special-card{ height: auto !important; min-height: clamp(500px, 34vw, 980px); }
+  .special-card{ height:auto !important; min-height: clamp(500px, 34vw, 980px); }
+  .special-card--oficial{
+    min-height: 500px!important;
+  }
+  .special-card__img--bottom{ transform: translateY(50%)!important; }
+  .special-card__img--top{ transform: translateY(80%) translateX(6%)!important; transition: transform .25s ease; }
+  .special-card--oficial:hover .special-card__img--top{ transform: translateY(80%)!important; }
 }
 .estate-title{
   font-family: "Druk Cyrillic";
@@ -519,7 +553,7 @@ html { overflow-x: hidden; }
   color: #f4f7f6;
   margin-bottom: 24px;
 }
-.estate-grid{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; }
+.estate-grid{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start;  }
 .estate-col{ display: flex; flex-direction: column; min-width: 0; }
 .estate-col--right{ margin-top: 300px; }
 .estate-card{
@@ -527,7 +561,7 @@ html { overflow-x: hidden; }
   border-radius: 24px;
   overflow: hidden;
   background: var(--bg, #215a6b);
-  padding: 14px;
+  padding: 28px;
   transition: transform .2s ease, box-shadow .2s ease;
   max-width: 800px;
   width: 100%;
@@ -952,8 +986,12 @@ margin-top: 50px;
   .estate-card{ height: 360px; }
 }
 
+.estate .reviews-arrow{
+  filter: invert(1);
+}
+
 /* Estate slider стили при js-слайдере */
-.estate-slider .estate-card{ width: 560px; max-width: 84vw; min-height: 500px; margin: 0 14px; }
+.estate-slider .estate-card{ width: 560px; max-width: 77vw; min-height: 500px; margin: 0 14px; }
 .estate-slider .estate-card .estate-card__img{ margin: 0; }
 .estate-slider, .estate-slider .slick-list{ overflow: hidden; }
 
@@ -963,7 +1001,7 @@ margin-top: 50px;
 
 /* Гибкая сетка без множества медиазапросов */
 .features-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 500px)); gap: 28px; list-style:none; padding:0; margin:0; justify-content:center; }
-.feature{ display:flex; flex-direction:column; align-items:center; text-align:center; width: min(100%, 500px); border-radius:10px; overflow:hidden; background:#fff; contain: content; transition: transform .35s ease, box-shadow .35s ease, filter .35s linear; will-change: transform, filter;}
+.feature{ display:flex; flex-direction:column; align-items:center; text-align:center; width: min(100%, 500px); border-radius:10px; overflow:hidden; background:#fff; contain: content; transition: transform .35s ease, box-shadow .35s ease, filter .35s linear; will-change: transform, filter; border-bottom: 2px solid #000000;}
 .feature-img{ width:100%; height: min(52vw, 370px); object-fit:cover;  }
 /* Анимируем только изображение: лёгкое приближение и свечения акцентным цветом */
 .feature:hover { transform: scale(1.05);  filter: brightness(1.03) saturate(1.05); }
@@ -1004,9 +1042,22 @@ margin-top: 50px;
 .apply-step__progress{ font-family: "Proxima Nova"; color: #8aa5a0; margin: 8px 0 16px; display: flex; align-items: baseline; gap: 10px; }
 .apply-step__num,.apply-step__total{ font-family: "Druk Cyrillic"; font-weight: 900; font-size: 24px; color: #8aa5a0; }
 .apply-step__label{ font-family: "Proxima Nova"; font-weight: 400; font-size: 36px; line-height: 120%; color: #e6f1ee; }
-.apply-fieldline{ position: relative; display:flex; align-items:flex-start; gap:8px; padding: 6px 0 16px; border-bottom: 2px solid rgba(255,255,255,0.15); }
-.apply-big-input{ flex:0 1 auto; min-width:10ch; max-width: 900px; background: transparent; border: 0; outline: 0; color: #fff; font-family: "Druk Cyrillic"; font-weight: 900; font-size: 56px; line-height: 130%; letter-spacing: 0; }
-.apply-big-unit{ position: relative; top: 8px; font-family: "Druk Cyrillic"; font-weight: 900; font-size: 40px; line-height: 130%; color: #fff; }
+.apply-fieldline{ position: relative; display:flex; align-items:flex-end; gap:8px; padding: 6px 0 6px; border-bottom: 2px solid rgba(255,255,255,0.15); }
+.apply-big-input{
+  max-height: 50px;
+  display: flex;
+  align-items: baseline;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: #fff;
+  font-family: "Druk Cyrillic";
+  font-weight: 900;
+  font-size: 56px;
+  line-height: 130%;
+  letter-spacing: 0;
+  }
+.apply-big-unit{ position: relative; top: 6px; font-family: "Druk Cyrillic"; font-weight: 900; font-size: 40px; line-height: 130%; color: #fff; }
 .apply-hint{ display:block; margin-top: 8px; font-family: "Proxima Nova"; font-weight: 400; font-size: 14px; color: rgba(255,255,255,0.6); }
 .apply-actions{ margin-top: 24px; }
 .apply-next[disabled]{ opacity: .5; pointer-events: none; }
@@ -1028,21 +1079,23 @@ margin-top: 50px;
   .rightBlock{ width: 520px; height: 460px; }
   .home-img{ width: clamp(320px, 38vw, 400px); }
   .coin{ --coin-float: -14px; }
-  .loan-card{ min-height: 780px; }
+  .loan-card{ min-height: 780px; min-width:85%!important;  }
+  .loan-cards{justify-items: center!important;  }
+  .loan-card--right{ margin-top: 20px!important; }
   .estate-card{ height: 640px; }
   .header-text{ display: none; }
 }
 
 @media (max-width: 991px){
   .header-wrap{ margin-top: 14px; }
-  .zalog{ flex-direction: column; align-items: center; margin-top: 60px; }
+  .zalog{ flex-direction: column;  margin-top: 60px; }
   .leftBlock-text{ font-size: clamp(48px, 8vw, 72px); }
   .credit-card{ width: 420px; height: 300px; }
-  .rightBlock{ width: 520px; height: 420px; }
+  .rightBlock{ width: 520px; height: 420px; margin: 0 auto; }
   .home-img{ width: clamp(300px, 50vw, 360px); right: 0; }
   .coin{ --coin-float: -12px; }
-  .loan-card{ min-height: 640px; }
-  .loan-card--right{ margin-top: 80px; }
+  .loan-card{ min-height: 640px; min-width:95%!important; }
+
   .estate-col--right{ margin-top: 120px; }
   .estate-card{ height: 540px; }
   .reviews-title, .reviews-rating{ width: 100%; }
@@ -1066,7 +1119,7 @@ margin-top: 50px;
   .loan-card__subtitle{ font-size: 18px; }
   .loan-card__btn{ font-size: 18px; }
   .loan-card--right{ margin-top: 32px; }
-  .estate-card{ height: 420px; border-radius: 18px; }
+  .estate-card{ min-height: 300px!important; border-radius: 18px; }
   .estate-card__label{ font-size: 28px; margin-left: 20px; margin-top: 20px; }
   .probability-figure{ width:280px; height:280px; }
   .probability-ic{ width: 52px; height: 52px; }
