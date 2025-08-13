@@ -480,12 +480,8 @@ $(function(){
 
   function toggle(){ $btn.prop('disabled', !valid()); }
   function autoWidth(){
-    // динамический размер инпута под содержимое
-    var span = $('#__measure');
-    if (span.length === 0) span = $('<span id="__measure" />').css({position:'absolute', visibility:'hidden', whiteSpace:'pre', fontFamily:'"Druk Cyrillic"', fontWeight:900, fontSize:'56px'}).appendTo(document.body);
-    span.text($input.val() || '');
-    var w = span.width();
-    $input.css('width', Math.min(Math.max(w, 60), 900));
+    // фиксируем ширину на 100% контейнера
+    $input.css('width', '100%');
   }
   $input.on('input keyup', function(){
     // Автокоррекция: если срок > 120, подставляем 120

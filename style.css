@@ -531,7 +531,7 @@ margin: 5%;
 .special-card--oficial:hover .special-card__img--top{ transform: translateY(80%); }
   .special-grid{ flex-direction:column; }
   .special-col--left{ margin-top: 0; }
-  .special-card{ min-height: 350px!important; min-width: 80vw; }
+  .special-card{ min-height: 390px!important; min-width: 80vw; }
 }
 
 /* Снижаем высоту карт на адаптивах, перекрывая жесткие высоты */
@@ -574,7 +574,7 @@ margin: 5%;
   box-shadow: 0 16px 36px rgba(0,0,0,0.35);
 }
 .estate-card__label{
-margin-left: 50px;
+
 margin-top: 50px;
   z-index: 2;
   font-family: "Proxima Nova";
@@ -583,6 +583,7 @@ margin-top: 50px;
   line-height: 1;
   letter-spacing: .02em;
   text-transform: uppercase;
+  text-align: center;
   color: #fff;
 }
 .estate-card__img{
@@ -898,7 +899,7 @@ margin-top: 50px;
 }
 /* ===== Reviews ===== */
 .reviews{ padding: 60px 0 100px; background:#fff; color:#0b1116; }
-.reviews-notice{ background:#4b4f53; color:#fff; border-radius:20px; padding: clamp(12px, 2vw, 24px); text-align:center; text-transform:uppercase; font-family:"Proxima Nova"; font-weight:700; font-size: clamp(16px, 3.8vw, 36px); line-height:120%; }
+.reviews-notice{ background:#4b4f53; color:#fff; border-radius:20px; padding: clamp(12px, 2vw, 24px); text-align:left; text-transform:uppercase; font-family:"Proxima Nova"; font-weight:700; font-size: clamp(16px, 3.8vw, 36px); line-height:120%; }
 .reviews-title{ margin:32px 0 24px; font-family:"Druk Cyrillic"; font-weight:900; font-size: clamp(40px, 6vw, 100px); line-height:102%; text-transform:uppercase; width: 40%; }
 .reviews-slider{ margin-top:16px; }
 /* Управляем отступами и высотой карточек внутри slick */
@@ -1062,6 +1063,9 @@ margin-top: 50px;
   font-size: 56px;
   line-height: 130%;
   letter-spacing: 0;
+  width: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
   }
 .apply-big-unit{ position: relative; top: 6px; font-family: "Druk Cyrillic"; font-weight: 900; font-size: 40px; line-height: 130%; color: #fff; }
 .apply-hint{ display:block; margin-top: 8px; font-family: "Proxima Nova"; font-weight: 400; font-size: 14px; color: rgba(255,255,255,0.6); }
@@ -1094,7 +1098,7 @@ margin-top: 50px;
 
 @media (max-width: 991px){
   .header-wrap{ margin-top: 14px; }
-  .zalog{ flex-direction: column;  margin-top: 60px; }
+  .zalog{ flex-direction: column;  margin-top: 100px; }
   .leftBlock-text{ font-size: clamp(48px, 8vw, 72px); }
   .credit-card{ width: 420px; height: 300px; }
   .rightBlock{ width: 520px; height: 420px; margin: 0 auto; }
@@ -1126,7 +1130,7 @@ margin-top: 50px;
   .loan-card__btn{ font-size: 18px; }
   .loan-card--right{ margin-top: 32px; }
   .estate-card{ min-height: 300px!important; border-radius: 18px; }
-  .estate-card__label{ font-size: 28px; margin-left: 20px; margin-top: 20px; }
+  .estate-card__label{ font-size: 28px;  margin-top: 20px; }
   .probability-figure{ width:280px; height:280px; }
   .probability-ic{ width: 52px; height: 52px; }
   .steps-list{ grid-template-columns: 1fr; }
