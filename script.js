@@ -131,8 +131,16 @@ $(function(){
       $('html, body').animate({ scrollTop: $target.offset().top - 16 }, 450);
     }
   }
-  // Кнопки в шаге 1
-  $(document).on('click', '.step-cta', goToCalc);
+  // Кнопки в шаге 1: открываем лид-модалку вместо скролла
+  $(document).on('click', '.step-cta', function(e){
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    if (window.Fancybox){
+      Fancybox.show([{ src:'#lead-modal', type:'inline' }], { dragToClose:false, closeButton:false });
+    } else {
+      goToCalc(e);
+    }
+  });
   // Кнопка верхняя CTA
   $(document).on('click', '.cta-btn', function(e){
     var $btn = $(this);
@@ -142,10 +150,13 @@ $(function(){
     var withinCalc = $btn.closest('#valuation').length > 0 || $btn.closest('#valuation-calc').length > 0;
     if (!withinCalc){ goToCalc(e); }
   });
-  // Кнопка approve "Получить деньги" -> тоже к калькулятору
+  // approve-cta: открываем лид-модалку
   $(document).on('click', '.approve-cta', function(e){
-    var href = $(this).attr('href') || '';
-    if (href.indexOf('#valuation-form') !== -1){ goToCalc(e); }
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    if (window.Fancybox){
+      Fancybox.show([{ src:'#lead-modal', type:'inline' }], { dragToClose:false, closeButton:false });
+    }
   });
 });
 
@@ -236,14 +247,66 @@ $(function(){
     var updateTerm = function(){ var v = parseInt(term.value,10); termVal.textContent = v + ' ' + (v%10===1 && v%100!==11 ? 'месяц' : (v%10>=2&&v%10<=4 && (v%100<10||v%100>=20) ? 'месяца' : 'месяцев')); };
     term.addEventListener('input', updateTerm); updateTerm();
   }
-  // выбранные файлы
+
+  // Валидация формы калькулятора: активируем кнопку только при корректных данных
+  var $valForm = $('#valuation-form');
+  if ($valForm.length){
+    var $submit = $valForm.find('.cta-invert');
+    function validateValForm(){
+      var ok = true;
+      $valForm.find('input[required]').each(function(){ if (!$(this).val().trim()) ok = false; });
+      // Диапазоны слайдеров уже ограничены атрибутами
+      $submit.prop('disabled', !ok);
+      return ok;
+    }
+    $valForm.on('input change', 'input', validateValForm);
+    validateValForm();
+    $valForm.on('submit', function(e){
+      e.preventDefault();
+      if (!validateValForm()) return;
+      if (window.Fancybox){
+        Fancybox.show([{ src:'#thanks-modal', type:'inline' }], { closeButton:false, dragToClose:false });
+        setTimeout(function(){ Fancybox.close(); }, 2500);
+      }
+      this.reset();
+      validateValForm();
+      // очистка выбранных файлов и возвращение подсказки
+      var out = this.querySelector('.file-selected');
+      var hint = this.querySelector('.file-hint');
+      if (out) out.textContent = '';
+      if (hint) hint.style.display = '';
+    });
+  }
+
+  // probability-form: валидация и модалка спасибо
+  var $prob = $('#probability-form');
+  if ($prob.length){
+    $prob.on('submit', function(e){
+      e.preventDefault();
+      var valid = true;
+      $prob.find('input[required]').each(function(){ if (!$(this).val().trim()) valid = false; });
+      if (!valid) return;
+      if (window.Fancybox){
+        Fancybox.show([{ src:'#thanks-modal', type:'inline' }], { closeButton:false, dragToClose:false });
+        setTimeout(function(){ Fancybox.close(); }, 2500);
+      }
+      this.reset();
+    });
+  }
+  // выбранные файлы (скрываем подсказку при наличии файлов)
   var fileInput = document.querySelector('.file-uploader input[type="file"]');
   var fileOut = document.querySelector('.file-selected');
+  var fileHint = document.querySelector('.file-hint');
   if (fileInput && fileOut){
     fileInput.addEventListener('change', function(){
-      if (!this.files || this.files.length === 0){ fileOut.textContent = ''; return; }
+      if (!this.files || this.files.length === 0){
+        fileOut.textContent = '';
+        if (fileHint) fileHint.style.display = '';
+        return;
+      }
       var names = Array.from(this.files).map(function(f){ return f.name; });
       fileOut.textContent = 'Прикреплено: ' + names.join(', ');
+      if (fileHint) fileHint.style.display = 'none';
     });
   }
 });
@@ -327,16 +390,15 @@ $(function(){
     });
 
     if (!valid) {
-      $(form).find('.apply-hint').css('color', '#ffb4b4');
+      $(form).find('.apply-hint').css('color', '#ff4d4f');
       return;
     }
 
-    // меняем текст кнопки и показываем модалку
-    $('.apply-submit-text').text('Отправить');
-    $('#thanks-trigger').trigger('click');
-    setTimeout(function(){
-      if (window.Fancybox) Fancybox.close();
-    }, 2500);
+    // показываем модалку спасибо
+    if (window.Fancybox){
+      Fancybox.show([{ src:'#thanks-modal', type:'inline' }], { closeButton:false, dragToClose:false });
+      setTimeout(function(){ Fancybox.close(); }, 2500);
+    }
     form.reset();
   });
 });

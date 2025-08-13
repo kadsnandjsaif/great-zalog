@@ -73,7 +73,7 @@ html { overflow-x: hidden; }
     padding: 0 16px;
 }
 
-.site-header{ position: fixed; top: 0; left:0; right:0; z-index: 100; backdrop-filter: blur(6px); background: rgba(14,43,49,0.4); }
+.site-header{ position: fixed; top: 0; left:0; right:0; z-index: 100; backdrop-filter: blur(6px); background: rgba(0, 94, 112, 0.555); }
 .site-header::after{ content:""; position:absolute; left:0; right:0; bottom:-1px; height:1px; background: rgba(255,255,255,.08); }
 .header-wrap {
     display: flex;
@@ -85,6 +85,7 @@ html { overflow-x: hidden; }
     color: #91A7A4;
     cursor: pointer;
     margin-top: 8px;
+    padding-bottom: 15px;
 
 }
 .header-logo img{ height: 40px; width:auto; display:block; }
@@ -112,14 +113,14 @@ html { overflow-x: hidden; }
 .modal{ max-width: 520px; text-align:center; padding: 28px; background: linear-gradient(105deg, rgba(25,25,25,0.75), rgba(15,226,255,0.12)); border: 1px solid rgba(47,144,255,.35); border-radius: 24px; color:#fff; position: relative; }
 .modal-title{ margin: 0 0 8px; font-family:"Druk Cyrillic"; font-weight:900; font-size:56px; line-height:1; text-transform:uppercase; }
 .modal-text{ margin:0; font-family:"Proxima Nova"; font-weight:600; font-size:18px; color:#cfd8d6; }
-.modal-close{ position:absolute; right:12px; top:12px; width:36px; height:36px; border-radius:50%; border:1px solid rgba(255,255,255,.35); background: rgba(0,0,0,.3); color:#fff; font-size:22px; line-height:1; cursor:pointer; }
+.modal-close{ position:absolute; right:12px; top:12px; width:36px; height:36px; border-radius:50%; border:2px solid rgba(255,255,255,.35); background: rgb(0, 0, 0); color:#fff; font-size:22px; line-height:1; cursor:pointer; }
 .modal-badge{ width:72px; height:72px; margin:0 auto 12px; border-radius:50%; background: radial-gradient(60% 60% at 50% 40%, #2f90ff 0%, rgba(47,144,255,.2) 100%); filter: blur(.2px); }
 
 /* Lead modal form */
 .lead-form{ display:flex; flex-direction:column; gap:10px; margin-top:12px; }
-.lead-form input[type=text], .lead-form input[type=tel]{ height:44px; border:1px solid rgba(255,255,255,.25); background: rgba(0,0,0,.25); color:#fff; border-radius:10px; padding:0 14px; font-family:"Proxima Nova"; font-size:18px; }
-.lead-form input::placeholder{ color: rgba(255,255,255,.6); }
-.lead-hint{ display:block; margin-top:8px; font-family:"Proxima Nova"; font-weight:400; font-size:12px; color: rgba(255,255,255,.65); }
+.lead-form input[type=text], .lead-form input[type=tel]{ height:44px; border:2px solid rgb(0, 0, 0); background: rgba(255, 255, 255, 0.25); color:#000000; border-radius:10px; padding:0 14px; font-family:"Proxima Nova"; font-size:18px; }
+.lead-form input::placeholder{ color: rgb(0, 0, 0); }
+.lead-hint{ display:block; margin-top:8px; font-family:"Proxima Nova"; font-weight:600; font-size:12px; color: rgba(255,255,255,.65); }
 
 @media (max-width: 767px){
   .modal{ max-width: 92vw; padding: 20px; }
@@ -840,6 +841,7 @@ margin-top: 50px;
 .file-uploader{ border:1px dashed rgba(0,0,0,.25); border-radius:8px; padding:10px 14px; min-height:44px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
 .file-uploader input{ display:none; }
 .file-hint{ font-family:"Proxima Nova"; font-weight:600; font-size:17px; color:#6b7177; line-height:140%; }
+.file-selected{ font-family:"Proxima Nova"; font-weight:600; font-size:17px; color:#0b1116; }
 /* Выбранные файлы */
 .file-selected{ font-family:"Proxima Nova"; font-weight:600; font-size:17px; color:#2a2f36; }
 .cta-invert{ justify-self:end; transition: background .2s ease, color .2s ease, border-color .2s ease; }
@@ -1001,10 +1003,10 @@ margin-top: 50px;
 
 /* Гибкая сетка без множества медиазапросов */
 .features-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 500px)); gap: 28px; list-style:none; padding:0; margin:0; justify-content:center; }
-.feature{ display:flex; flex-direction:column; align-items:center; text-align:center; width: min(100%, 500px); border-radius:10px; overflow:hidden; background:#fff; contain: content; transition: transform .35s ease, box-shadow .35s ease, filter .35s linear; will-change: transform, filter; border-bottom: 2px solid #000000;}
+.feature{ display:flex; flex-direction:column; align-items:center; text-align:center; width: min(100%, 500px); border-radius:30px 30px 0 0; overflow:hidden; background:#fff; contain: content; transition: transform .35s ease, box-shadow .35s ease, filter .35s linear; will-change: transform, filter; border-bottom: 1px solid #000000;}
 .feature-img{ width:100%; height: min(52vw, 370px); object-fit:cover;  }
 /* Анимируем только изображение: лёгкое приближение и свечения акцентным цветом */
-.feature:hover { transform: scale(1.05);  filter: brightness(1.03) saturate(1.05); }
+.feature:hover { border-bottom: 1px solid #ffffff; transform: scale(1.03); }
 .feature-text{ margin-top:12px; font-family:"Proxima Nova"; font-weight:600; font-size:28px; line-height:140%; color:#2a2f36; }
 
 /* мягкие пороги при необходимости */
