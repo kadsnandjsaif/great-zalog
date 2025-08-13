@@ -480,8 +480,19 @@ $(function(){
 
   function toggle(){ $btn.prop('disabled', !valid()); }
   function autoWidth(){
-    // фиксируем ширину на 100% контейнера
-    $input.css('width', '100%');
+    var st = steps[i];
+    var val = ($input.val() || '').trim();
+    // Если есть юнит и есть значение — подгоняем ширину под содержимое, чтобы юнит примыкал
+    if (st && st.unit && val.length > 0){
+      var span = $('#__measure');
+      if (span.length === 0) span = $('<span id="__measure" />').css({position:'absolute', visibility:'hidden', whiteSpace:'pre', fontFamily:'"Druk Cyrillic"', fontWeight:900, fontSize:'56px'}).appendTo(document.body);
+      span.text(val);
+      var w = span.width() + 6; // небольшой зазор
+      $input.css({ width: Math.min(Math.max(w, 60), 900) + 'px', flex: '0 0 auto' });
+    } else {
+      // Иначе — тянем на всю строку
+      $input.css({ width: '100%', flex: '1 1 auto' });
+    }
   }
   $input.on('input keyup', function(){
     // Автокоррекция: если срок > 120, подставляем 120
