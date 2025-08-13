@@ -135,7 +135,11 @@ $(function(){
   $(document).on('click', '.step-cta', goToCalc);
   // Кнопка верхняя CTA
   $(document).on('click', '.cta-btn', function(e){
-    var withinCalc = $(this).closest('#valuation').length > 0 || $(this).closest('#valuation-calc').length > 0;
+    var $btn = $(this);
+    // Не перехватываем сабмиты форм и кнопки внутри модалок
+    if ($btn.attr('type') === 'submit') return;
+    if ($btn.closest('.modal').length > 0) return;
+    var withinCalc = $btn.closest('#valuation').length > 0 || $btn.closest('#valuation-calc').length > 0;
     if (!withinCalc){ goToCalc(e); }
   });
   // Кнопка approve "Получить деньги" -> тоже к калькулятору
@@ -300,8 +304,9 @@ $(function(){
     var $t = $(this);
     // если это ссылочный элемент с якорем на калькулятор — перехватим в lead-модалку
     e.preventDefault();
+    e.stopImmediatePropagation();
     if (window.Fancybox){
-      Fancybox.show([{ src:'#lead-modal', type:'inline' }], { dragToClose:false, closeButton:true });
+      Fancybox.show([{ src:'#lead-modal', type:'inline' }], { dragToClose:false, closeButton:false });
     }
   });
   $('#apply-form').on('submit', function(e){
