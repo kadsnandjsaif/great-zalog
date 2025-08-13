@@ -273,8 +273,10 @@ $(function(){
       // очистка выбранных файлов и возвращение подсказки
       var out = this.querySelector('.file-selected');
       var hint = this.querySelector('.file-hint');
+      var previews = this.querySelector('.file-previews');
       if (out) out.textContent = '';
       if (hint) hint.style.display = '';
+      if (previews) previews.innerHTML = '';
     });
   }
 
@@ -293,20 +295,42 @@ $(function(){
       this.reset();
     });
   }
-  // выбранные файлы (скрываем подсказку при наличии файлов)
+  // выбранные файлы (скрываем подсказку при наличии файлов) и превью изображений
   var fileInput = document.querySelector('.file-uploader input[type="file"]');
   var fileOut = document.querySelector('.file-selected');
   var fileHint = document.querySelector('.file-hint');
-  if (fileInput && fileOut){
+  var filePreviews = document.querySelector('.file-previews');
+  if (fileInput){
     fileInput.addEventListener('change', function(){
+      if (filePreviews) filePreviews.innerHTML = '';
       if (!this.files || this.files.length === 0){
-        fileOut.textContent = '';
+        if (fileOut) fileOut.textContent = '';
         if (fileHint) fileHint.style.display = '';
         return;
       }
-      var names = Array.from(this.files).map(function(f){ return f.name; });
-      fileOut.textContent = 'Прикреплено: ' + names.join(', ');
+      var files = Array.from(this.files);
+      if (fileOut) fileOut.textContent = 'Прикреплено: ' + files.map(function(f){ return f.name; }).join(', ');
       if (fileHint) fileHint.style.display = 'none';
+      if (filePreviews){
+        files.forEach(function(f){
+          if (!f.type || f.type.indexOf('image/') !== 0) return;
+          var reader = new FileReader();
+          reader.onload = function(e){
+            var item = document.createElement('div');
+            item.className = 'file-preview';
+            var img = document.createElement('img');
+            img.alt = 'preview';
+            img.src = e.target.result;
+            var name = document.createElement('span');
+            name.className = 'file-name';
+            name.textContent = f.name;
+            item.appendChild(img);
+            item.appendChild(name);
+            filePreviews.appendChild(item);
+          };
+          reader.readAsDataURL(f);
+        });
+      }
     });
   }
 });

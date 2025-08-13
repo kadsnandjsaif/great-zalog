@@ -844,6 +844,10 @@ margin-top: 50px;
 .file-selected{ font-family:"Proxima Nova"; font-weight:600; font-size:17px; color:#0b1116; }
 /* Выбранные файлы */
 .file-selected{ font-family:"Proxima Nova"; font-weight:600; font-size:17px; color:#2a2f36; }
+.file-previews{ display:flex; flex-direction:column; gap:8px; width:100%; margin-top:8px; }
+.file-preview{ display:flex; align-items:center; gap:10px; border:1px solid rgba(0,0,0,.1); border-radius:8px; padding:8px; background:#fafafa; }
+.file-preview img{ width:100%; max-width: 320px; height:auto; object-fit:cover; border-radius:6px; }
+.file-preview .file-name{ font-family:"Proxima Nova"; font-weight:600; font-size:14px; color:#333; }
 .cta-invert{ justify-self:end; transition: background .2s ease, color .2s ease, border-color .2s ease; }
 .cta-invert:hover{ background:#fff; color:#2f90ff; border:1px solid #2f90ff; }
 
