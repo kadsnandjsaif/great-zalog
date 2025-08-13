@@ -451,11 +451,14 @@ $(function(){
     $apply.find('.apply-step__num').text(String(i+1).padStart(2,'0'));
     $apply.find('.apply-step__total').text(String(steps.length).padStart(2,'0'));
     $apply.find('.apply-step__label').text(st.label);
-    $unit.text(st.unit);
+    $unit.text(st.unit || '');
     $hint.text(st.hint);
     $input.attr('inputmode', st.inputmode || 'text').val(state[st.key] || '');
     // ограничиваем длину для срока займа до 3 символов
     if (st.key === 'term') { $input.attr('maxlength', '3'); } else { $input.removeAttr('maxlength'); }
+    // показываем единицы измерения (мес/₽) только если есть ввод
+    if (!st.unit) { $unit.hide(); }
+    else { $unit.toggle(Boolean(($input.val()||'').trim().length)); }
     setMask(st);
     toggle();
     $('.apply-next-text').text(i === steps.length-1 ? 'Отправить' : 'Далее');
@@ -499,6 +502,10 @@ $(function(){
         if (n < 1) raw = '1';
       }
       $input.val(raw);
+    }
+    // Показ/скрытие единицы измерения только при наличии значения
+    if (st && st.unit){
+      $unit.toggle(Boolean(($input.val()||'').trim().length));
     }
     toggle();
     autoWidth();
