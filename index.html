@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <base href="./">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20250812165141">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +15,25 @@
     <header class="site-header">
         <div class="wrapper header-wrap">
             <a class="header-logo" href="#"><img src="images/icons/logo.svg" alt="logo"></a>
-            <div class="header-text"> <span> Набережные Челны,<br> ул. Машиностроительная, 22 стр. 5</span></div>
+            <div class="header-text header-address">
+                <button class="address-toggle" type="button" aria-expanded="false" aria-label="Выбрать адрес">
+                  <svg class="address-arrow" width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2"/>
+                </svg>  
+                  <span class="address-current">Набережные Челны,<br> ул. Машиностроительная, 22 стр. 5</span>
+                   
+                </button>
+                <div class="address-dropdown" hidden>
+                    <button class="address-option" data-city="chelny" type="button">
+                        <span class="address-option__city">Набережные Челны</span>
+                        <span class="address-option__street">ул. Машиностроительная, 22 стр. 5</span>
+                    </button>
+                    <button class="address-option" data-city="kazan" type="button">
+                        <span class="address-option__city">Казань</span>
+                        <span class="address-option__street">ул. Проспект Победы, 202 офис 212</span>
+                    </button>
+                </div>
+            </div>
             <div class="header-text"> <span>+7 (952) 046-08-08</span></div>
         <div class="header-text"> <span>Моментальное одобрение</span></div>
         <div class="header-text"> <span>Работаем ежедневно <br> с 9:00 до 18:00</span></div>
@@ -42,8 +59,35 @@
           <a class="menu-link" href="#faq" data-menu-link>ответы на вопросы</a>
         </nav>
 
-        <!-- Мобильный перенос информации из хедера -->
-        <div class="menu-extra" aria-label="Контакты"></div>
+                <!-- Мобильный перенос информации из хедера -->
+        <div class="menu-extra" aria-label="Контакты">
+          <div class="menu-address">
+            <button class="address-toggle address-toggle--menu" type="button" aria-expanded="false" aria-label="Выбрать адрес">
+              <svg class="address-arrow" width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2"/>
+            </svg>
+              <span class="address-current">Набережные Челны,<br> ул. Машиностроительная, 22 стр. 5</span>
+              
+            </button>
+            <div class="address-dropdown" hidden>
+              <button class="address-option" data-city="chelny" type="button">
+                <span class="address-option__city">Набережные Челны</span>
+                <span class="address-option__street">ул. Машиностроительная, 22 стр. 5</span>
+              </button>
+              <button class="address-option" data-city="kazan" type="button">
+                <span class="address-option__city">Казань</span>
+                <span class="address-option__street">ул. Проспект Победы, 202 офис 212</span>
+              </button>
+            </div>
+          </div>
+          <div class="menu-phone">
+            <a href="tel:+79520460808">+7 (952) 046-08-08</a>
+          </div>
+          <div class="menu-info">
+            <span>Моментальное одобрение</span>
+            <span>Работаем ежедневно с 9:00 до 18:00</span>
+          </div>
+        </div>
       </aside>
     </div>
 
@@ -167,7 +211,7 @@
         <!-- Секция формы заявки -->
         <section class="apply" id="apply">
           <div class="wrapper">
-            <h2 class="apply-title">рассчитаем условия займа</h2>
+            <h2 class="apply-title">Рассчитайте за 5 минут<br> возможную для вас<br> сумму займа</h2>
           </div>
         </section>
 
@@ -300,10 +344,10 @@
               </div>
               <p class="probability-help">Или напишите нашему менеджеру в мессенджеры, чтобы оценить вероятность выдачи займа</p>
               <div class="probability-contacts">
-                <a class="probability-ic tg" href="http://t.me/89999999999" target="_blank" rel="noopener" aria-label="Telegram">
+                <a class="probability-ic tg" href="https://t.me/+79520460808" target="_blank" rel="noopener" aria-label="Telegram">
                   <img src="riski/tg.svg" alt="Telegram" width="60px" height="60px" />
                 </a>
-                <a class="probability-ic wa" href="https://wa.me/89999999999" aria-label="WhatsApp">
+                <a class="probability-ic wa" href="https://wa.me/+79520460808" aria-label="WhatsApp">
                   <img src="riski/watsapp.svg" alt="WhatsApp" width="60px" height="60px" />
                 </a>
               </div>
@@ -409,11 +453,15 @@
                   <span class="file-selected" aria-live="polite"></span>
                   <div class="file-previews" aria-live="polite"></div>
                 </label>
-                <button class="cta-btn cta-invert" type="submit">
-                  <span>Получить одобрение</span>
-                  <span class="cta-arrow">→</span>
-                </button>
-              </form>
+                <div class="valuation-hint-wrap" style="display: flex; flex-direction: column; align-items: center;">
+                  <button class="cta-btn cta-invert" type="submit">
+                    <span>Получить одобрение</span>
+                    <span class="cta-arrow">→</span>
+                  </button>
+                  <small class="valuation-hint">Я даю согласие на обработку своих персональных данных согласно политике конфиденциальности</small>
+               
+                </div>
+                 </form>
             </div>
           </div>
         </section>
@@ -427,8 +475,8 @@
                 <p class="mcta__subtitle">Воспользуйтесь удобным мессенджером</p>
               </div>
               <div class="mcta__actions">
-                <a class="pill-btn" href="http://t.me/89999999999" target="_blank" rel="noopener">Telegram <span class="pill-arrow">→</span></a>
-                <a class="pill-btn" href="whatsapp://send?phone=89999999999">Whatsapp <span class="pill-arrow">→</span></a>
+                <a class="pill-btn" href="https://t.me/+79520460808" target="_blank" rel="noopener">Telegram <span class="pill-arrow">→</span></a>
+                <a class="pill-btn" href="https://wa.me/+79520460808">Whatsapp <span class="pill-arrow">→</span></a>
               </div>
             </div>
           </div>
@@ -651,10 +699,10 @@
                   </div>
                <p class="probability-help">Или напишите нашему менеджеру в мессенджеры, чтобы оценить вероятность выдачи займа</p>
                <div class="probability-contacts">
-                 <a class="probability-ic tg" href="http://t.me/89999999999" target="_blank" rel="noopener" aria-label="Telegram">
+                 <a class="probability-ic tg" href="https://t.me/+79520460808" target="_blank" rel="noopener" aria-label="Telegram">
                    <img src="riski/tg.svg" alt="Telegram" width="60px" height="60px" />
                  </a>
-                 <a class="probability-ic wa" href="whatsapp://send?phone=89999999999" aria-label="WhatsApp">
+                 <a class="probability-ic wa" href="https://wa.me/+79520460808" aria-label="WhatsApp">
                    <img src="riski/watsapp.svg" alt="WhatsApp" width="60px" height="60px" />
                  </a>
               </div>
@@ -672,10 +720,10 @@
               <img src="images/icons/logo.svg" alt="microZaim" width="300" height="64" />
             </a>
             <div class="probability-contacts footer-ics">
-              <a class="probability-ic tg" href="http://t.me/89999999999" target="_blank" rel="noopener" aria-label="Telegram">
+              <a class="probability-ic tg" href="https://t.me/+79520460808" target="_blank" rel="noopener" aria-label="Telegram">
                 <img src="riski/tg.svg" alt="Telegram" width="60" height="60" />
               </a>
-              <a class="probability-ic wa" href="https://wa.me/89999999999" aria-label="WhatsApp">
+              <a class="probability-ic wa" href="https://wa.me/+79520460808" aria-label="WhatsApp">
                 <img src="riski/watsapp.svg" alt="WhatsApp" width="60" height="60" />
               </a>
             </div>
@@ -683,9 +731,27 @@
 
           <div class="footer-cols">
             <nav class="footer-col" aria-label="Контакты и документы">
-              <a href="#" class="footer-link">Набережные Челны,<br> ул. Машиностроительная, 22 стр. 5</a>
+              <div class="footer-address">
+                <button class="address-toggle address-toggle--footer" type="button" aria-expanded="false" aria-label="Выбрать адрес">
+                  <svg class="address-arrow" width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  <span class="address-current">Набережные Челны,<br> ул. Машиностроительная, 22 стр. 5</span>
+                 
+                </button>
+                <div class="address-dropdown" hidden>
+                  <button class="address-option" data-city="chelny" type="button">
+                    <span class="address-option__city">Набережные Челны</span>
+                    <span class="address-option__street">ул. Машиностроительная, 22 стр. 5</span>
+                  </button>
+                  <button class="address-option" data-city="kazan" type="button">
+                    <span class="address-option__city">Казань</span>
+                    <span class="address-option__street">ул. Проспект Победы, 202 офис 212</span>
+                  </button>
+                </div>
+              </div>
               <a href="#valuation-form" class="footer-link">Калькулятор займа</a>
-              <a href="#" class="footer-link">Политика конфиденциальности</a>
+              <a href="p.pdf" class="footer-link" target="_blank" rel="noopener">Политика конфиденциальности</a>
             </nav>
             <nav class="footer-col" aria-label="Режим и соглашения">
               <a href="#" class="footer-link">Работаем ежедневно<br> с 09:00 до 18:00</a>
@@ -728,10 +794,10 @@
               <span>Жду звонка</span>
               <span class="cta-arrow">→</span>
             </button>
-            <small class="lead-hint">Нажимая «Жду звонка», вы соглашаетесь с обработкой персональных данных</small>
+            <small class="lead-hint">Я даю согласие на обработку своих персональных данных согласно политике конфиденциальности</small>
           </form>
         </div>
-      </div>
+     </div>
      <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.8/dist/jquery.inputmask.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.js"></script>

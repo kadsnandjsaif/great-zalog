@@ -1,5 +1,98 @@
 // CSS-анимация монет подключена в style.css (@keyframes coin-float)
 
+// ===== Address Dropdown Functionality =====
+document.addEventListener('DOMContentLoaded', function() {
+  // Функция для закрытия всех выпадающих списков
+  function closeAllDropdowns() {
+    document.querySelectorAll('.address-toggle').forEach(toggle => {
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+    document.querySelectorAll('.address-dropdown').forEach(dropdown => {
+      dropdown.setAttribute('hidden', '');
+      dropdown.style.display = 'none';
+    });
+  }
+  
+  // Используем делегирование событий для динамических элементов
+  document.addEventListener('click', function(e) {
+    // Обработчик для кнопок переключения
+    const toggle = e.target.closest('.address-toggle');
+    if (toggle) {
+      e.stopPropagation();
+      e.preventDefault();
+      const parent = toggle.parentElement;
+      const dropdown = parent.querySelector('.address-dropdown');
+      if (!dropdown) {
+        console.error('Dropdown not found!');
+        return;
+      }
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      
+      // Закрываем все остальные
+      closeAllDropdowns();
+      
+      // Переключаем текущий
+      if (!isOpen) {
+        toggle.setAttribute('aria-expanded', 'true');
+        dropdown.removeAttribute('hidden');
+        dropdown.style.display = 'block';
+        console.log('Dropdown opened:', dropdown);
+      }
+      return;
+    }
+    
+    // Обработчик для выбора адреса
+    const option = e.target.closest('.address-option');
+    if (option) {
+      e.stopPropagation();
+      e.preventDefault();
+      const city = option.dataset.city;
+      const cityName = option.querySelector('.address-option__city').textContent;
+      const street = option.querySelector('.address-option__street').textContent;
+      
+      // Обновляем все текущие адреса
+      document.querySelectorAll('.address-current').forEach(current => {
+        current.innerHTML = `${cityName},<br> ${street}`;
+      });
+      
+      // Сохраняем выбор в localStorage
+      localStorage.setItem('selectedCity', city);
+      
+      // Закрываем выпадающий список
+      closeAllDropdowns();
+      return;
+    }
+  
+    
+    // Закрытие при клике вне области
+    if (!e.target.closest('.header-address') && 
+        !e.target.closest('.menu-address') && 
+        !e.target.closest('.footer-address')) {
+      closeAllDropdowns();
+    }
+  });
+  
+  // Закрытие при нажатии Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeAllDropdowns();
+    }
+  });
+  
+  // Восстанавливаем выбранный город при загрузке
+  const savedCity = localStorage.getItem('selectedCity');
+  if (savedCity) {
+    const savedOption = document.querySelector(`.address-option[data-city="${savedCity}"]`);
+    if (savedOption) {
+      const cityName = savedOption.querySelector('.address-option__city').textContent;
+      const street = savedOption.querySelector('.address-option__street').textContent;
+      document.querySelectorAll('.address-current').forEach(current => {
+        current.innerHTML = `${cityName},<br> ${street}`;
+      });
+    }
+  }
+});
+
 // Плавное появление карточек секции loans и легкий параллакс фона
 $(function(){
   var $cards = $('.loan-card');
@@ -430,7 +523,7 @@ $(function(){
     {key:'amount', label:'Желаемая сумма займа', unit:'₽', hint:'минимум 500 000', mask:{ alias:'numeric', digits:0, min:500000, rightAlign:false, groupSeparator:' ', autoGroup:true, showMaskOnHover:false, showMaskOnFocus:false }, inputmode:'numeric'},
     {key:'pledge', label:'Вид залога', unit:'', hint:'например: коммерческая недвижимость', mask:{ regex:'[A-Za-zА-Яа-яЁё\s\-]{3,60}', showMaskOnHover:false, showMaskOnFocus:false }, inputmode:'text'},
     {key:'income', label:'Заработная плата', unit:'₽', hint:'укажите чистый доход', mask:{ alias:'numeric', digits:0, min:0, rightAlign:false, groupSeparator:' ', autoGroup:true, showMaskOnHover:false, showMaskOnFocus:false }, inputmode:'numeric'},
-    {key:'phone', label:'Номер телефона', unit:'', hint:'формат +7 (999)-999-99-99', mask:{ mask:'+7 (999)-999-99-99' }, inputmode:'tel'}
+    {key:'phone', label:'Номер телефона', unit:'', hint:'Я даю согласие на обработку своих персональных данных согласно политике конфиденциальности', mask:{ mask:'+7 (999)-999-99-99' }, inputmode:'tel'}
   ];
 
   var state = {}; var i = 0;

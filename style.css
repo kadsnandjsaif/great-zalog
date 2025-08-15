@@ -84,8 +84,9 @@ html { overflow-x: hidden; }
     font-weight: 700;
     color: #91A7A4;
     cursor: pointer;
-    margin-top: 8px;
+    
     padding-bottom: 15px;
+    padding-top: 15px;
 
 }
 .header-logo img{ height: 40px; width:auto; display:block; }
@@ -98,14 +99,14 @@ html { overflow-x: hidden; }
 .menu-overlay{ position: fixed; inset: 0; display:none; z-index: 1000; }
 .menu-overlay.is-open{ display:block; }
 .menu-backdrop{ position:absolute; inset:0; background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); }
-.menu-panel{ position:absolute; right:0; top:0; height:100%; width:min(480px, 90vw);background:#0b1116; color:#fff; box-shadow: -12px 0 40px rgba(0,0,0,.35); transform: translateX(100%); transition: transform .28s ease; padding: 24px; display:flex; flex-direction:column; gap: 16px; }
+.menu-panel{ position:absolute; right:0; top:0; height:100%; width:min(480px, 90vw);background:#0b1116; color:#fff; box-shadow: -12px 0 40px rgba(0,0,0,.35); transform: translateX(100%); transition: transform .28s ease; padding: 24px; display:flex; flex-direction:column; gap: 16px; z-index: 1001; overflow: visible; }
 .menu-overlay.is-open .menu-panel{ transform: translateX(0); }
 .menu-close{ align-self:flex-end; width:40px; height:40px; border-radius:50%; border:1px solid rgba(255,255,255,.2); background: transparent; color:#fff; font-size:28px; line-height:1; cursor:pointer; }
 .menu-title{ margin:0 0 8px; font-family:"Druk Cyrillic"; font-weight:900; font-size:40px; line-height:1; text-transform:uppercase; }
 .menu-nav{ display:flex; flex-direction:column; gap: 12px; margin-top:4px; }
 .menu-link{ font-family:"Proxima Nova"; font-weight:700; font-size:24px; line-height:120%; text-transform:uppercase; color:#e0e6ea; text-decoration:none; width:max-content; }
 .menu-link:hover{ color:#2f90ff; border-bottom:1px solid #2f90ff; }
-.menu-extra{ margin-top:auto; margin-bottom: 40px; padding-top: 16px; border-top:1px solid rgba(255,255,255,.12); display:flex; flex-direction:column; gap:8px; color:#9fb3bf; font-family:"Proxima Nova"; font-weight:600; font-size:17px; }
+.menu-extra{ margin-top:auto; margin-bottom: 40px; padding-top: 16px; border-top:1px solid rgba(255,255,255,.12); display:none; flex-direction:column; gap:8px; color:#9fb3bf; font-family:"Proxima Nova"; font-weight:600; font-size:17px; position: relative; z-index: 1; }
 .menu-nav{ margin-bottom: auto; }
 
 
@@ -120,7 +121,19 @@ html { overflow-x: hidden; }
 .lead-form{ display:flex; flex-direction:column; gap:10px; margin-top:12px; }
 .lead-form input[type=text], .lead-form input[type=tel]{ height:44px; border:2px solid rgb(0, 0, 0); background: rgba(255, 255, 255, 0.25); color:#000000; border-radius:10px; padding:0 14px; font-family:"Proxima Nova"; font-size:18px; }
 .lead-form input::placeholder{ color: rgb(0, 0, 0); }
-.lead-hint{ display:block; margin-top:8px; font-family:"Proxima Nova"; font-weight:600; font-size:12px; color: rgba(255,255,255,.65); }
+.lead-hint{ 
+    display:block; 
+    margin-top:12px; 
+    font-family:"Proxima Nova"; 
+    font-weight:500; 
+    font-size:13px; 
+    color: rgba(0, 0, 0, 0.75); 
+    line-height: 140%;
+    text-align: center;
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 @media (max-width: 767px){
   .modal{ max-width: 92vw; padding: 20px; }
@@ -136,6 +149,195 @@ html { overflow-x: hidden; }
     color: #2f90ff;
     scale: 1.01;
     cursor: pointer;
+}
+
+/* ===== Address Dropdown ===== */
+.header-address { position: relative; }
+.address-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    cursor: pointer;
+    text-align: left;
+    padding: 0;
+    transition: all 0.2s linear;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+.address-toggle:hover {
+    color: #2f90ff;
+}
+.address-arrow {
+    width: 12px;
+    height: 8px;
+    transition: transform 0.2s ease;
+}
+.address-toggle[aria-expanded="true"] .address-arrow {
+    transform: rotate(180deg);
+}
+.address-dropdown {
+    position: absolute;
+    top: -10%;
+    left: 0;
+    margin-top: 8px;
+    background: rgba(14, 43, 49, 0.98);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 8px;
+    min-width: 280px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s linear;
+}
+.address-dropdown:not([hidden]) {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.address-option {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+.address-option:hover {
+    background: rgba(47, 144, 255, 0.15);
+}
+.address-option__city {
+    font-family: "Proxima Nova";
+    font-weight: 700;
+    font-size: 16px;
+    color: #fff;
+}
+.address-option__street {
+    font-family: "Proxima Nova";
+    font-weight: 600;
+    font-size: 14px;
+    color: #91A7A4;
+}
+
+/* Мобильное меню */
+.menu-address {
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 10;
+    overflow: visible;
+}
+.address-toggle--menu {
+    color: #e0e6ea;
+    font-family: "Proxima Nova";
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 125%;
+    width: 100%;
+    justify-content: flex-start;
+}
+.address-toggle--menu:hover {
+    color: #2f90ff;
+}
+.menu-address {
+    position: absolute;
+    top: -120px;
+    left: 0;
+    background: #1a1a1a;
+    border: 2px solid #2f90ff;
+    border-radius: 12px;
+    padding: 8px;
+    width: 100%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+}
+.menu-address .address-dropdown[hidden] {
+    display: none !important;
+}
+.menu-address .address-dropdown:not([hidden]) {
+    display: block !important;
+}
+.menu-address .address-option {
+    padding: 10px 12px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: #fff;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+.menu-address .address-option:hover {
+    background: rgba(47, 144, 255, 0.2);
+    border-color: rgba(47, 144, 255, 0.3);
+}
+.menu-address .address-option__city {
+    font-size: 18px;
+    color: #fff;
+    font-weight: 700;
+}
+.menu-address .address-option__street {
+    font-size: 14px;
+    color: #cfd8d6;
+}
+.menu-phone {
+    margin-bottom: 12px;
+}
+.menu-phone a {
+    font-family: "Proxima Nova";
+    font-weight: 700;
+    font-size: 20px;
+    color: #e0e6ea;
+    text-decoration: none;
+}
+.menu-phone a:hover {
+    color: #2f90ff;
+}
+.menu-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.menu-info span {
+    font-family: "Proxima Nova";
+    font-weight: 600;
+    font-size: 16px;
+    color: #9fb3bf;
+}
+
+/* Футер */
+.footer-address {
+    position: relative;
+    margin-bottom: 14px;
+}
+.address-toggle--footer {
+    color: #5f5f5f;
+    font-size: 17px;
+}
+.address-toggle--footer:hover {
+    color: #2f90ff;
+}
+.footer-address .address-dropdown {
+    background: #0e0e0e;
+    border-color: rgba(255, 255, 255, 0.08);
+    bottom: 100%;
+    top: auto;
+    margin-bottom: 8px;
+    margin-top: 0;
 }
 
 .zalog {
@@ -358,9 +560,9 @@ html { overflow-x: hidden; }
 
 .loan-cards{
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 830px));
+  grid-template-columns: repeat(2, minmax(0, 930px));
   gap: 20px;
-  justify-content: space-evenly;
+
   align-items: start;
   margin-top: 12px;
 }
@@ -373,7 +575,7 @@ html { overflow-x: hidden; }
   box-shadow: 0 20px 40px rgba(0,0,0,0.25);
   top: 24px; /* старт для анимации появления */
   opacity: 0; /* стартовое состояние */
-  max-width: 830px;
+  max-width: 930px;
 }
 .loan-card.dark::before{
   content: "";
@@ -481,7 +683,7 @@ html { overflow-x: hidden; }
 .special{ margin: clamp(24px, 3vw, 40px) 0 clamp(48px, 5vw, 80px); }
 .special-grid{ display:flex; align-items:center; width:100%; gap: clamp(12px, 2vw, 20px); }
 .special-col{ display:flex; flex-direction:column; flex:1 1 50%; min-width:0; align-items: center;}
-.special-col--left{ margin-top: clamp(40px, 6vw, 100px); }
+.special-col--right{ margin-top: clamp(40px, 6vw, 100px); }
 .special-card{
   position: relative;
   border-radius: 24px;
@@ -556,7 +758,7 @@ margin: 5%;
 }
 .estate-grid{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start;  }
 .estate-col{ display: flex; flex-direction: column; min-width: 0; }
-.estate-col--right{ margin-top: 300px; }
+.estate-col--left{ margin-top: 300px; }
 .estate-card{
   position: relative;
   border-radius: 24px;
@@ -850,6 +1052,19 @@ margin-top: 50px;
 .file-preview img{ width:100%; max-width: 320px; height:auto; object-fit:cover; border-radius:6px; }
 .file-preview .file-name{ font-family:"Proxima Nova"; font-weight:600; font-size:14px; color:#333; }
 .cta-invert{ justify-self:end; transition: background .2s ease, color .2s ease, border-color .2s ease; }
+.valuation-hint{ 
+    display:block; 
+    margin-top:12px; 
+    font-family:"Proxima Nova"; 
+    font-weight:500; 
+    font-size:13px; 
+    color: rgba(0, 0, 0, 0.75); 
+    line-height: 140%;
+    text-align: center;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+}
 .cta-invert:hover{ background:#fff; color:#2f90ff; border:1px solid #2f90ff; }
 
 @media (max-width: 1199px){
@@ -1044,10 +1259,12 @@ margin-top: 50px;
   text-transform: uppercase;
   color: #f4f7f6;
   margin-bottom: 24px;
+  
 }
 .apply-wizard{ max-width: 1600px; }
-.apply-step__progress{ font-family: "Proxima Nova"; color: #8aa5a0; margin: 8px 0 16px; display: flex; align-items: baseline; gap: 10px; }
-.apply-step__num,.apply-step__total{ font-family: "Druk Cyrillic"; font-weight: 900; font-size: 24px; color: #8aa5a0; }
+.apply-step__progress{ font-family: "Proxima Nova"; color: #8aa5a0; margin: 8px 0 16px; display: flex; align-items: baseline; gap: 10px; font-size: 24px; }
+.apply-step__num{font-size: 48px; color: #8aa5a0;font-weight: 900;  font-family: "Druk Cyrillic";}
+.apply-step__total{ font-family: "Druk Cyrillic"; font-weight: 900; font-size: 24px; color: #8aa5a0; }
 .apply-step__label{ font-family: "Proxima Nova"; font-weight: 400; font-size: 36px; line-height: 120%; color: #e6f1ee; }
 .apply-fieldline{ position: relative; display:flex; align-items:flex-end; gap:8px; padding: 6px 0 6px; border-bottom: 2px solid rgba(255,255,255,0.15); }
 .apply-big-input{
@@ -1084,6 +1301,10 @@ margin-top: 50px;
 
 @media (max-width: 1199px){
   .header-wrap{ flex-wrap: wrap; row-gap: 8px; }
+  /* Адаптив для выпадающего списка адресов */
+  .header-address .address-dropdown { 
+    min-width: 240px; 
+  }
   .leftBlock-text{ font-size: clamp(56px, 7vw, 92px); }
   .credit-card{ width: 440px; height: 320px; }
   .rightBlock{ width: 520px; height: 460px; }
@@ -1106,6 +1327,9 @@ margin-top: 50px;
   .coin{ --coin-float: -12px; }
   .loan-card{ min-height: 640px; min-width:95%!important; }
 
+  /* На планшетах: правая колонка ниже левой */
+  .estate-col--left{ margin-top: 0; }
+  .estate-col--right{ margin-top: clamp(140px, 14vw, 240px); }
   .estate-col--right{ margin-top: 120px; }
   .estate-card{ height: 540px; }
   .reviews-title, .reviews-rating{ width: 100%; }
@@ -1114,6 +1338,10 @@ margin-top: 50px;
 @media (max-width: 767px){
   .header-wrap{ justify-content: space-between; }
   .header-text{ display: none; }
+  /* Скрываем адрес в хедере на мобилке (он есть в мобильном меню) */
+  .header-address { display: none; }
+  /* Показываем контакты в мобильном меню только на мобилке */
+  .menu-extra { display: flex; }
   .leftBlock-text{ font-size: clamp(34px, 9vw, 48px); }
   .leftBlock-text-s{ font-size: 18px; }
   .rightBlock{ width: 100%; height: 360px; }
@@ -1130,6 +1358,9 @@ margin-top: 50px;
   .loan-card__btn{ font-size: 18px; }
   .loan-card--right{ margin-top: 32px; }
   .estate-card{ min-height: 300px!important; border-radius: 18px; }
+  /* На мобильных: добавляем отступ перед правой колонкой, чтобы она была ниже */
+  .estate-col--left{ margin-top: 0; }
+  .estate-col--right{ margin-top: 24px; }
   .estate-card__label{ font-size: 28px;  margin-top: 20px; }
   .probability-figure{ width:280px; height:280px; }
   .probability-ic{ width: 52px; height: 52px; }
