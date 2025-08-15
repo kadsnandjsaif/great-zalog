@@ -85,8 +85,8 @@ html { overflow-x: hidden; }
     color: #fff;
     cursor: pointer;
     
-    padding-bottom: 15px;
-    padding-top: 15px;
+    padding-bottom: 23px;
+    padding-top:     23px;
 
 }
 .header-logo img{ height: 40px; width:auto; display:block; }
@@ -1002,7 +1002,7 @@ margin-top: 50px;
 }
 
 /* ===== Safety section ===== */
-.safety{ padding-top: 80px; background:#fff; color:#0b1116; }
+.safety{ padding-top: 80px; padding-bottom:80px; background:#fff; color:#0b1116; }
 .safety__wrap{ display:grid; grid-template-columns: 1fr 1fr; align-items:center; gap: 40px; }
 .safety__left, .safety__right{ min-width: 0; }
 .safety-title{ font-family:"Druk Cyrillic"; font-weight:900; font-size:100px; line-height:102%; text-transform:uppercase; margin:0 0 20px; }
